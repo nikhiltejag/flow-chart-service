@@ -1,0 +1,40 @@
+Hi,
+
+We are excited to share the next steps in our process.
+
+- As the first step of evaluation, we are sending an assignment which should not take more than 3-4 hours.
+- You are required to finish the assignment within 48 hours of receiving it.
+- Once you have finished, please send us the link to your GitHub repository with clear instructions on how to run the code.
+- Also, host the code on some free hosting platform like Vercel or Netlify and send the link to the hosted application.
+- Feel free to add any additional features or enhancements to the assignment as you see fit. There is an extra point for UI/UX of the assignment, so ensure you present the best code.
+After we evaluate your completed assignment, we will let you know if you have progressed to the next stage which will be a technical interview of 1 hour.
+
+Assignment
+
+Design and implement a system to manage flowcharts with basic CRUD operations.
+
+Each flowchart consists of nodes and edges that form a directed graph. Implement the following features:
+1. Create Flowchart: Create a new flowchart with a unique ID, nodes, and edges.
+2. Fetch Flowchart: Fetch details of a flowchart by its ID, including its nodes and edges.
+3. Update Flowchart: Add or remove nodes and edges in an existing flowchart.
+4. Delete Flowchart: Delete an existing flowchart by its ID.
+
+Good-to-Have Functionality
+1. Validate the graph.
+2. Add an endpoint to fetch all outgoing edges for a given node.
+3. Implement basic Swagger documentation for the APIs.
+
+Brownie Points Functionality
+1. Allow querying all nodes connected to a specific node (directly or indirectly).
+2. Unit tests
+
+We look forward to seeing your work!
+----------------
+Hi
+
+We would like to apologise for an oversight in the above message. Please note:
+
+1. You are not required to host the code
+2. There are no UI/UX components involved, we are just expecting the backend code for this
+
+Thank you for understanding and we look forward to your submission.

@@ -1,0 +1,526 @@
+{
+	"info": {
+		"_postman_id": "c6055166-0fb7-4ac5-b64b-f9517aabb452",
+		"name": "Flow chart",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39164865"
+	},
+	"item": [
+		{
+			"name": "Create",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"    if (pm.response.code == 201) {\r",
+							"    pm.collectionVariables.set(\"chartId\", pm.response.json()[\"id\"]);\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"chart-1\",\r\n    \"nodes\": [\"1\", \"2\", \"3\"],\r\n    \"edges\": [[\"1\", \"2\"], [\"2\", \"3\"]]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/flow-charts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"flow-charts"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Flow chart created",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"chart-1\",\r\n    \"nodes\": [\"1\", \"2\", \"3\"],\r\n    \"edges\": [[\"1\", \"2\"], [\"2\", \"3\"]]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/flow-charts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"flow-charts"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 12 Dec 2024 19:18:09 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"43666f1f-f36f-463c-bbb2-9f8370c06a89\",\n    \"name\": \"chart-1\",\n    \"nodes\": [\n        \"1\",\n        \"2\",\n        \"3\"\n    ],\n    \"edges\": [\n        [\n            \"1\",\n            \"2\"\n        ],\n        [\n            \"2\",\n            \"3\"\n        ]\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Get By Id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"chart-1\",\r\n    \"nodes\": [\"1\", \"2\", \"3\"],\r\n    \"edges\": [[\"1\", \"2\"], [\"2\", \"3\"]]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/flow-charts/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"flow-charts",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{chartId}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Fetched the created chart",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"chart-1\",\r\n    \"nodes\": [\"1\", \"2\", \"3\"],\r\n    \"edges\": [[\"1\", \"2\"], [\"2\", \"3\"]]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/flow-charts/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"flow-charts",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{chartId}}"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 12 Dec 2024 19:18:18 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"43666f1f-f36f-463c-bbb2-9f8370c06a89\",\n    \"name\": \"chart-1\",\n    \"nodes\": [\n        \"1\",\n        \"2\",\n        \"3\"\n    ],\n    \"edges\": [\n        [\n            \"2\",\n            \"3\"\n        ],\n        [\n            \"1\",\n            \"2\"\n        ]\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Update",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    // \"name\": \"chart-1\",\r\n    \"nodes\": [\"5\"],\r\n    \"edges\": [[\"2\", \"5\"]]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/flow-charts/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"flow-charts",
+						":id"
+					],
+					"query": [
+						{
+							"key": "operation",
+							"value": "remove",
+							"disabled": true
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{chartId}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "add 1 node & edge",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    // \"name\": \"chart-1\",\r\n    \"nodes\": [\"5\"],\r\n    \"edges\": [[\"2\", \"5\"]]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/flow-charts/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"flow-charts",
+								":id"
+							],
+							"query": [
+								{
+									"key": "operation",
+									"value": "remove",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{chartId}}"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 12 Dec 2024 19:18:37 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"43666f1f-f36f-463c-bbb2-9f8370c06a89\",\n    \"name\": \"chart-1\",\n    \"nodes\": [\n        \"1\",\n        \"2\",\n        \"3\",\n        \"5\"\n    ],\n    \"edges\": [\n        [\n            \"2\",\n            \"3\"\n        ],\n        [\n            \"2\",\n            \"5\"\n        ],\n        [\n            \"1\",\n            \"2\"\n        ]\n    ]\n}"
+				},
+				{
+					"name": "remove new node",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    // \"name\": \"chart-1\",\r\n    \"nodes\": [\"5\"]\r\n    // \"edges\": [[\"2\", \"5\"]]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/flow-charts/:id?operation=remove",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"flow-charts",
+								":id"
+							],
+							"query": [
+								{
+									"key": "operation",
+									"value": "remove"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{chartId}}"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 12 Dec 2024 19:19:00 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"43666f1f-f36f-463c-bbb2-9f8370c06a89\",\n    \"name\": \"chart-1\",\n    \"nodes\": [\n        \"1\",\n        \"2\",\n        \"3\"\n    ],\n    \"edges\": [\n        [\n            \"2\",\n            \"3\"\n        ],\n        [\n            \"1\",\n            \"2\"\n        ]\n    ]\n}"
+				},
+				{
+					"name": "error if trying to add same node",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    // \"name\": \"chart-1\",\r\n    \"nodes\": [\"2\"]\r\n    // \"edges\": [[\"2\", \"1\"]]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/flow-charts/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"flow-charts",
+								":id"
+							],
+							"query": [
+								{
+									"key": "operation",
+									"value": "remove",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{chartId}}"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 12 Dec 2024 19:21:56 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Duplicate data found please check the chart and input\",\n    \"status\": \"error\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete Flow chart",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/flow-charts/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"flow-charts",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{chartId}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "deleted flow chart",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/flow-charts/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"flow-charts",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{chartId}}"
+								}
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Thu, 12 Dec 2024 19:19:09 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": null
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "chartId",
+			"value": ""
+		}
+	]
+}
