@@ -56,6 +56,7 @@
    User Name: user
    Password: pass
    ```
+5. You can check ER diagram [here](dbdiagram.png)
 
 ### Using flow charts APIs
 
