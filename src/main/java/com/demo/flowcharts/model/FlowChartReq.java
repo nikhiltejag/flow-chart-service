@@ -10,5 +10,5 @@ public class FlowChartReq {
 
    private String name;
    private Set<String> nodes;
-   private List<List<String>> edges;
+   private Set<List<String>> edges;
 }

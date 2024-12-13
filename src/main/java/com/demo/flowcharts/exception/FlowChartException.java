@@ -18,4 +18,8 @@ public class FlowChartException extends RuntimeException {
    public static FlowChartException get(int code, String message) {
       return new FlowChartException(HttpStatus.valueOf(code), message);
    }
+
+   public static FlowChartException badRequest(String message) {
+      return new FlowChartException(HttpStatus.BAD_REQUEST, message);
+   }
 }

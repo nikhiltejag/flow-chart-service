@@ -30,6 +30,7 @@ public class FlowChartService {
    private final NodeEntityRepository nodeRepo;
 
    public FlowChartRes create(FlowChartReq req) {
+      validate(req);
       FlowChartEntity savedEntity = flowChartRepo.save(FlowChartMapper.toCreate(req));
       List<NodeEntity> nodes = createNodes(savedEntity, req.getNodes());
       List<EdgeEntity> edges = createEdges(req, nodes);
@@ -54,8 +55,6 @@ public class FlowChartService {
    public FlowChartRes getById(String id) {
       FlowChartEntity flowChart = getFlowChartOrElseThrow(id);
       List<NodeEntity> nodes = nodeRepo.findAllByFlowChart(flowChart.getId());
-      var map = new HashMap<String, NodeEntity>();
-      nodes.forEach(n -> map.put(n.getId(), n));
       List<EdgeEntity> edges = edgeEntityRepo.findAllByNodeFrom(nodes.stream().map(NodeEntity::getId).toList());
       return FlowChartMapper.toRes(flowChart, nodes, edges);
    }
@@ -123,5 +122,21 @@ public class FlowChartService {
       edgeEntityRepo.deleteByNodeFromOrNodeTo(nodes.stream().map(NodeEntity::getId).toList());
       nodeRepo.deleteAll(nodes);
       flowChartRepo.delete(flowChart);
+   }
+
+   private void validate(FlowChartReq req) {
+      Set<String> nodes = req.getNodes();
+
+      Set<List<String>> edges = req.getEdges();
+      edges.forEach(e -> {
+         if (e.size() != 2)
+            throw FlowChartException.badRequest("Edges should have exactly 2 nodes");
+
+         if (!nodes.contains(e.get(0)) || !nodes.contains(e.get(1)))
+            throw FlowChartException.badRequest("Edge should have only nodes present in nodes list");
+
+         if (edges.contains(List.of(e.get(1), e.get(0))))
+            throw FlowChartException.badRequest("Only 1 edge should present between any 2 nodes, but 2 present between nodes " + e.get(0) + " & " + e.get(1));
+      });
    }
 }

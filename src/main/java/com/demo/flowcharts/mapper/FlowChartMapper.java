@@ -12,6 +12,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class FlowChartMapper {
+
+   private FlowChartMapper() {}
+
    public static FlowChartRes toRes(FlowChartEntity entity, List<NodeEntity> nodes, List<EdgeEntity> edges) {
       return FlowChartRes.builder()
               .id(entity.getId())
