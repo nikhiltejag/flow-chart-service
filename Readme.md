@@ -16,7 +16,7 @@
    ```bash
    mvn spring-boot:run
    ```
-   Or else you can directly the jar using below command
+   Or else you can directly run the jar using below command
    ```bash
    java -jar .\target\flowcharts-0.0.1-SNAPSHOT.jar
    ```
