@@ -1,14 +1,17 @@
 # Getting Started
 
 ### Setting up locally
+
 1. Open terminal and move to any directory of your choice.
 2. We will be creating project in this directory.
-3. Clone the application using the shared GitHub repository [link](https://github.com/nikhiltejag/flow-chart-service.git) and move into the project directory.
+3. Clone the application using the shared GitHub
+   repository [link](https://github.com/nikhiltejag/flow-chart-service.git) and move into the project directory.
    ```bash
    git clone https://github.com/nikhiltejag/flow-chart-service.git
    cd flow-chart-service
    ```
-4. Build the application using maven (make sure you have the latest maven and java(version: 17 or latest) installed in your system)
+4. Build the application using maven (make sure you have the latest maven and java(version: 17 or latest) installed in
+   your system)
    ```bash
    mvn clean install
    ```
@@ -20,14 +23,15 @@
    ```bash
    java -jar .\target\flowcharts-0.0.1-SNAPSHOT.jar
    ```
-6. If you see below line in the application logs, then we have successfully running the application. Time taken to run may vary
+6. If you see below line in the application logs, then we have successfully running the application. Time taken to run
+   may vary
    ```text
     c.demo.flowcharts.FlowChartsApplication  : Started FlowChartsApplication in 6.193 seconds
    ```
 7. Hurray, our project setup is completed, let's delve into the features in the next section
 
-
 ### Checking Application status
+
 1. After you complete the steps in above section, we can see application started in `localhost:8080`
 2. You can change the port by adding below property in `application.yml` file
    ```yaml
@@ -45,19 +49,31 @@
     "message": "FlowChartsApplication is up and running..."
    }
    ```
-   
+4. We are using in memory h2 database, you can access its console
+   at [localhost:8080/h2-console](http://localhost:8080/h2-console) using below credentials.
+   ```text
+   JDBC URL: jdbc:h2:mem:my_db
+   User Name: user
+   Password: pass
+   ```
+
 ### Using flow charts APIs
+
 We have 4 APIs for managing flow charts in this application.
+
 1. Create Flow Chart
 2. Fetch flow chart using ID
 3. Update flow chart
 4. Delete flow chart
 
 You can use below cURL requests in given order to test each API.
-Or else you can import the attached [postman collection](Flow%20chart.postman_collection.json) and see examples or invoke the APIs.
+Or else you can import the attached [postman collection](Flow%20chart.postman_collection.json) and see examples or
+invoke the APIs.
 
 ### Create flow-chart
+
 #### API: (POST `/flow-charts`)
+
 1. To create a flow you need to provide name, list of nodes, list of edges.
 2. Edge should be a list of length 2 `["node_1", "node_2"]`. Indicating a directed edge from `node_1` to `node_2`.
 3. Use below cURL to create flow chart `chart-1`
@@ -92,11 +108,15 @@ Or else you can import the attached [postman collection](Flow%20chart.postman_co
     ]
    }
    ```
+
 ### Fetch flow-chart
+
 #### API: (GET `/flow-charts/{id}`)
-1. Replace the `{id}` field with id we got in [Create Flow chart](#Create-Flow-chart) (if you use postman id will be auto updated through postman scripts).
+
+1. Replace the `{id}` field with id we got in [Create Flow chart](#Create-Flow-chart) (if you use postman id will be
+   auto updated through postman scripts).
 2. use below cURL (after replacing id).
-   
+
    ```bash
    curl --location 'http://localhost:8080/flow-charts/b149f771-efff-4a10-b659-ffaba8a34125'
    ```
@@ -125,9 +145,12 @@ Or else you can import the attached [postman collection](Flow%20chart.postman_co
    ```
 
 ### Update flow-chart (add nodes or edges)
+
 #### API: (PATCH `/flow-charts/{id}`)
-1. Replace the `{id}` field with id we got in [Create Flow chart](#Create-Flow-chart) (if you use postman id will be auto updated through postman scripts).
-2. use below cURL 
+
+1. Replace the `{id}` field with id we got in [Create Flow chart](#Create-Flow-chart) (if you use postman id will be
+   auto updated through postman scripts).
+2. use below cURL
    ```bash
    curl --location --request PATCH 'http://localhost:8080/flow-charts/{{chartId}}' \
    --header 'Content-Type: application/json' \
@@ -166,10 +189,13 @@ Or else you can import the attached [postman collection](Flow%20chart.postman_co
    ```
 
 ### Update flow-chart (remove nodes or edges)
+
 #### API: (PATCH `/flow-charts/{id}`)
+
 1. To remove nodes or edges using same patch API, we need to use a parameter `operation=remove`.
 2. In above API we didn't send any parameter because if we do not mention any the default operation is `add`.
-3. Replace the `{id}` field with id we got in [Create Flow chart](#Create-Flow-chart) (if you use postman id will be auto updated through postman scripts).
+3. Replace the `{id}` field with id we got in [Create Flow chart](#Create-Flow-chart) (if you use postman id will be
+   auto updated through postman scripts).
 4. Use below cURL
    ```bash
    curl --location --request PATCH 'http://localhost:8080/flow-charts/{{chartId}}?operation=remove' \
@@ -181,31 +207,35 @@ Or else you can import the attached [postman collection](Flow%20chart.postman_co
    ```
    > Whenever we are removing a node, we will also remove all the edges related to that node.
 5. Expected response
+
 ```json
 {
-    "id": "43666f1f-f36f-463c-bbb2-9f8370c06a89",
-    "name": "chart-1",
-    "nodes": [
-        "1",
-        "2",
-        "3"
+  "id": "43666f1f-f36f-463c-bbb2-9f8370c06a89",
+  "name": "chart-1",
+  "nodes": [
+    "1",
+    "2",
+    "3"
+  ],
+  "edges": [
+    [
+      "2",
+      "3"
     ],
-    "edges": [
-        [
-            "2",
-            "3"
-        ],
-        [
-            "1",
-            "2"
-        ]
+    [
+      "1",
+      "2"
     ]
+  ]
 }
 ```
 
 ### Delete flow-chart
+
 #### API: (DELETE `/flow-charts/{id}`)
-1. Replace the `{id}` field with id we got in [Create Flow chart](#Create-Flow-chart) (if you use postman id will be auto updated through postman scripts).
+
+1. Replace the `{id}` field with id we got in [Create Flow chart](#Create-Flow-chart) (if you use postman id will be
+   auto updated through postman scripts).
 2. Use below cURL
    ```bash
    curl --location --request DELETE 'http://localhost:8080/flow-charts/b149f771-efff-4a10-b659-ffaba8a34125'
