@@ -1,15 +1,12 @@
 # Getting Started
 
 ### Setting up locally
-1. Open terminal and move to any directory of your choice
-2. create a new directory with name `flow-charts-application`
-    ```bash
-    mkdir flow-charts-application
-    cd flow-charts-application
-    ``` 
-3. Clone the application using the shared GitHub repository [link](https://github.com/nikhiltejag/flow-chart-service.git)
+1. Open terminal and move to any directory of your choice.
+2. We will be creating project in this directory.
+3. Clone the application using the shared GitHub repository [link](https://github.com/nikhiltejag/flow-chart-service.git) and move into the project directory.
    ```bash
    git clone https://github.com/nikhiltejag/flow-chart-service.git
+   cd flow-chart-service
    ```
 4. Build the application using maven (make sure you have the latest maven and java(version: 17 or latest) installed in your system)
    ```bash
@@ -99,16 +96,12 @@ Or else you can import the attached [postman collection](Flow%20chart.postman_co
 #### API: (GET `/flow-charts/{id}`)
 1. Replace the `{id}` field with id we got in [Create Flow chart](#Create-Flow-chart) (if you use postman id will be auto updated through postman scripts).
 2. use below cURL (after replacing id).
+   
    ```bash
-   curl --location --request GET 'http://localhost:8080/flow-charts/b149f771-efff-4a10-b659-ffaba8a34125' \
-   --header 'Content-Type: application/json' \
-   --data '{
-   "name": "chart-1",
-   "nodes": ["1", "2", "3"],
-   "edges": [["1", "2"], ["2", "3"]]
-   }'
+   curl --location 'http://localhost:8080/flow-charts/b149f771-efff-4a10-b659-ffaba8a34125'
    ```
-   You would see response in below format
+
+3. You would see response in below format
    ```json
       {
     "id": "43666f1f-f36f-463c-bbb2-9f8370c06a89",
@@ -136,7 +129,8 @@ Or else you can import the attached [postman collection](Flow%20chart.postman_co
 1. Replace the `{id}` field with id we got in [Create Flow chart](#Create-Flow-chart) (if you use postman id will be auto updated through postman scripts).
 2. use below cURL 
    ```bash
-   curl --location --globoff --request PATCH 'http://localhost:8080/flow-charts/{{chartId}}' \
+   curl --location --request PATCH 'http://localhost:8080/flow-charts/{{chartId}}' \
+   --header 'Content-Type: application/json' \
    --data '{
        "nodes": ["5"],
        "edges": [["2", "5"]]
@@ -178,9 +172,9 @@ Or else you can import the attached [postman collection](Flow%20chart.postman_co
 3. Replace the `{id}` field with id we got in [Create Flow chart](#Create-Flow-chart) (if you use postman id will be auto updated through postman scripts).
 4. Use below cURL
    ```bash
-   curl --location --globoff --request PATCH 'http://localhost:8080/flow-charts/{{chartId}}?operation=remove' \
+   curl --location --request PATCH 'http://localhost:8080/flow-charts/{{chartId}}?operation=remove' \
+   --header 'Content-Type: application/json' \
    --data '{
-       
        "nodes": ["5"]
        
    }'
@@ -217,3 +211,10 @@ Or else you can import the attached [postman collection](Flow%20chart.postman_co
    curl --location --request DELETE 'http://localhost:8080/flow-charts/b149f771-efff-4a10-b659-ffaba8a34125'
    ```
 3. Expected status code: 204 No Content
+4. Now, if we try to fetch it again using [Fetch API](#Fetch-flow-chart), we would get error saying no flow chart found.
+   ```json
+   {
+       "status": "error",
+       "message": "Flow chart not found"
+   }
+   ```

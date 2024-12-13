@@ -170,21 +170,9 @@
 		},
 		{
 			"name": "Get By Id",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"chart-1\",\r\n    \"nodes\": [\"1\", \"2\", \"3\"],\r\n    \"edges\": [[\"1\", \"2\"], [\"2\", \"3\"]]\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
 					"raw": "http://localhost:8080/flow-charts/:id",
 					"protocol": "http",
@@ -265,6 +253,54 @@
 					],
 					"cookie": [],
 					"body": "{\n    \"id\": \"43666f1f-f36f-463c-bbb2-9f8370c06a89\",\n    \"name\": \"chart-1\",\n    \"nodes\": [\n        \"1\",\n        \"2\",\n        \"3\"\n    ],\n    \"edges\": [\n        [\n            \"2\",\n            \"3\"\n        ],\n        [\n            \"1\",\n            \"2\"\n        ]\n    ]\n}"
+				},
+				{
+					"name": "Error - no chart found",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/flow-charts/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"flow-charts",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{chartId}}"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 13 Dec 2024 05:15:10 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"error\",\n    \"message\": \"Flow chart not found\"\n}"
 				}
 			]
 		},
