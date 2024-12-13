@@ -248,3 +248,98 @@ invoke the APIs.
        "message": "Flow chart not found"
    }
    ```
+   
+### Graph validation
+Please test this section after performing [Create Flow chart](#create-flow-chart)
+
+   #### Create API
+1. Check if all the edges have exactly 2 nodes (Refer Error - 1 example in postman).
+   ```bash
+   curl --location 'http://localhost:8080/flow-charts' \
+   --header 'Content-Type: application/json' \
+   --data '{
+       "name": "chart-1",
+       "nodes": ["1", "2", "3"],
+       "edges": [["1", "2"], ["2", "3"], ["3", "2", "2"]]
+   }'
+   ```
+   Response:
+   ```json
+   {
+       "status": "error",
+       "message": "Edge should exactly have 2 nodes"
+   }
+   ```
+   
+2. Check if all the nodes used in edges are present in nodes (Refer Error - 2 example in postman).
+   ```bash
+   curl --location 'http://localhost:8080/flow-charts' \
+   --header 'Content-Type: application/json' \
+   --data '{
+   "name": "chart-1",
+   "nodes": ["1", "2", "3"],
+   "edges": [["1", "2"], ["2", "3"], ["3", "4"]]
+   }'
+   ```
+   Response:
+   ```json
+   {
+   "status": "error",
+   "message": "Edge should have only nodes present in nodes list"
+   }
+   ```
+
+3. Check if there is 2nd edge between same nodes in another direction (Refer Error - 3 example in postman).
+   ```bash
+   curl --location 'http://localhost:8080/flow-charts' \
+   --header 'Content-Type: application/json' \
+   --data '{
+   "name": "chart-1",
+   "nodes": ["1", "2", "3"],
+   "edges": [["1", "2"], ["2", "3"], ["3", "2"]]
+   }'
+   ```
+   Response:
+   ```json
+   {
+   "status": "error",
+   "message": "Only 1 edge should present between any 2 nodes, but 2 present between nodes 3 & 2"
+   }
+   ```
+
+   #### Update API
+4. Check if new nodes to add already present in flow chart before updating (Refer Error - 4 example in postman).
+   ```bash
+   curl --location --request PATCH 'http://localhost:8080/flow-charts/4a0539b5-8f4b-4b6f-9ecc-afac2b01ba8c' \
+   --header 'Content-Type: application/json' \
+   --data '{
+       
+       "nodes": ["1"]
+       
+   }'
+   ```
+   Response:
+   ```json
+   {
+       "status": "error",
+       "message": "Some of the given nodes already present."
+   }
+   ```
+
+5. Check if new edges to add or its reverse edge already present in flow chart before updating (Refer Error - 5 example in postman).
+   ```bash
+   curl --location --request PATCH 'http://localhost:8080/flow-charts/4a0539b5-8f4b-4b6f-9ecc-afac2b01ba8c' \
+   --header 'Content-Type: application/json' \
+   --data '{
+   
+   
+       "edges": [["2", "1"]]
+   }'
+   ```
+   Response:
+   ```json
+   {
+   "status": "error",
+   "message": "Edge already present between nodes 2 & 1"
+   }
+   ```

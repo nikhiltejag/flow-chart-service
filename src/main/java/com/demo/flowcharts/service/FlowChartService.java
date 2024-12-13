@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+
+import static com.demo.flowcharts.exception.FlowChartException.badRequest;
 
 @Slf4j
 @Service
@@ -100,15 +103,34 @@ public class FlowChartService {
          flowChart.setName(req.getName());
          flowChartRepo.save(flowChart);
       }
-      if (req.getNodes() != null && !req.getNodes().isEmpty()) {
-         createNodes(flowChart, req.getNodes());
-      }
       var nodes = getAllByFlowChart(flowChart);
-      if (req.getEdges() != null && !req.getEdges().isEmpty()) {
-         createEdges(req, nodes);
-      }
       var edges = edgeEntityRepo.findAllByNodeFrom(nodes.stream().map(NodeEntity::getId).toList());
+
+      validate(req, nodes, edges);
+
+      if (req.getNodes() != null && !req.getNodes().isEmpty()) {
+         nodes.addAll(createNodes(flowChart, req.getNodes()));
+      }
+      if (req.getEdges() != null && !req.getEdges().isEmpty()) {
+         edges.addAll(createEdges(req, nodes));
+      }
       return FlowChartMapper.toRes(flowChart, nodes, edges);
+   }
+
+   private static void validate(FlowChartReq req, List<NodeEntity> nodes, List<EdgeEntity> edges) {
+      if (req.getNodes() != null) {
+         var existingNodes = nodes.stream().map(NodeEntity::getLabel).collect(Collectors.toSet());
+         if (req.getNodes() != null && req.getNodes().stream().anyMatch(existingNodes::contains))
+            throw badRequest("Some of the given nodes already present.");
+      }
+
+      if (req.getEdges() != null) {
+         var existingEdges = edges.stream().map(e -> List.of(e.getNodeFrom().getLabel(), e.getNodeTo().getLabel())).collect(Collectors.toSet());
+         req.getEdges().forEach(e -> {
+            if (existingEdges.contains(e) || existingEdges.contains(List.of(e.get(1), e.get(0))))
+               throw badRequest("Edge already present between nodes " + e.get(0) + " & " + e.get(1));
+         });
+      }
    }
 
    public List<NodeEntity> getAllByFlowChart(FlowChartEntity flowChart) {
@@ -130,13 +152,13 @@ public class FlowChartService {
       Set<List<String>> edges = req.getEdges();
       edges.forEach(e -> {
          if (e.size() != 2)
-            throw FlowChartException.badRequest("Edges should have exactly 2 nodes");
+            throw badRequest("Edges should have exactly 2 nodes");
 
          if (!nodes.contains(e.get(0)) || !nodes.contains(e.get(1)))
-            throw FlowChartException.badRequest("Edge should have only nodes present in nodes list");
+            throw badRequest("Edge should have only nodes present in nodes list");
 
          if (edges.contains(List.of(e.get(1), e.get(0))))
-            throw FlowChartException.badRequest("Only 1 edge should present between any 2 nodes, but 2 present between nodes " + e.get(0) + " & " + e.get(1));
+            throw badRequest("Only 1 edge should present between any 2 nodes, but 2 present between nodes " + e.get(0) + " & " + e.get(1));
       });
    }
 }
