@@ -7,7 +7,6 @@ import com.demo.flowcharts.model.FlowChartReq;
 import com.demo.flowcharts.model.FlowChartRes;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -44,9 +43,5 @@ public class FlowChartMapper {
 
    public static NodeEntity toCreate(String node, FlowChartEntity chartEntity) {
       return NodeEntity.builder().label(node).flowChart(chartEntity).build();
-   }
-
-   public static Map<String, String> body(String status, String message) {
-      return Map.of("status", status, "message", message);
    }
 }

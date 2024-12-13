@@ -29,12 +29,3 @@ Brownie Points Functionality
 2. Unit tests
 
 We look forward to seeing your work!
-----------------
-Hi
-
-We would like to apologise for an oversight in the above message. Please note:
-
-1. You are not required to host the code
-2. There are no UI/UX components involved, we are just expecting the backend code for this
-
-Thank you for understanding and we look forward to your submission.
