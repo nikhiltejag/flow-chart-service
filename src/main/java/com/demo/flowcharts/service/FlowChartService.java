@@ -26,12 +26,13 @@ import static com.demo.flowcharts.exception.FlowChartException.badRequest;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class FlowChartService {
+public class FlowChartService implements FlowChartServiceable {
 
-   private final FlowChartRepository flowChartRepo;
    private final EdgeEntityRepository edgeEntityRepo;
+   private final FlowChartRepository flowChartRepo;
    private final NodeEntityRepository nodeRepo;
 
+   @Override
    public FlowChartRes create(FlowChartReq req) {
       validate(req);
       FlowChartEntity savedEntity = flowChartRepo.save(FlowChartMapper.toCreate(req));
@@ -55,6 +56,7 @@ public class FlowChartService {
       return nodeRepo.saveAll(nodes);
    }
 
+   @Override
    public FlowChartRes getById(String id) {
       FlowChartEntity flowChart = getFlowChartOrElseThrow(id);
       List<NodeEntity> nodes = nodeRepo.findAllByFlowChart(flowChart.getId());
@@ -67,6 +69,7 @@ public class FlowChartService {
               .orElseThrow(() -> FlowChartException.get(404, "Flow chart not found"));
    }
 
+   @Override
    public FlowChartRes update(String id, String operation, FlowChartReq req) {
       return switch (operation) {
          case "add" -> add(id, req);
@@ -137,6 +140,7 @@ public class FlowChartService {
       return nodeRepo.findAllByFlowChart(flowChart.getId());
    }
 
+   @Override
    @Transactional
    public void delete(String id) {
       FlowChartEntity flowChart = getFlowChartOrElseThrow(id);

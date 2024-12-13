@@ -2,7 +2,7 @@ package com.demo.flowcharts.api;
 
 import com.demo.flowcharts.model.FlowChartReq;
 import com.demo.flowcharts.model.FlowChartRes;
-import com.demo.flowcharts.service.FlowChartService;
+import com.demo.flowcharts.service.FlowChartServiceable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class FlowChartController {
 
-   private final FlowChartService flowChartService;
+   private final FlowChartServiceable flowChartService;
 
    @PostMapping
    public ResponseEntity<FlowChartRes> create(@RequestBody FlowChartReq req) {
