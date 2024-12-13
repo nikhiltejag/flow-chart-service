@@ -3,6 +3,7 @@ package com.demo.flowcharts.service;
 import com.demo.flowcharts.entity.EdgeEntity;
 import com.demo.flowcharts.entity.FlowChartEntity;
 import com.demo.flowcharts.entity.NodeEntity;
+import com.demo.flowcharts.exception.FlowChartException;
 import com.demo.flowcharts.mapper.FlowChartMapper;
 import com.demo.flowcharts.model.FlowChartReq;
 import com.demo.flowcharts.model.FlowChartRes;
@@ -61,14 +62,14 @@ public class FlowChartService {
 
    private FlowChartEntity getFlowChartOrElseThrow(String id) {
       return flowChartRepo.findById(id)
-              .orElseThrow(() -> new RuntimeException("Flow chart not found"));
+              .orElseThrow(() -> FlowChartException.get(404, "Flow chart not found"));
    }
 
    public FlowChartRes update(String id, String operation, FlowChartReq req) {
       return switch (operation) {
          case "add" -> add(id, req);
          case "remove" -> remove(id, req);
-         default -> throw new RuntimeException("Invalid operation, please choose add/remove");
+         default -> throw FlowChartException.get(400,"Invalid operation, please choose add/remove");
       };
    }
 

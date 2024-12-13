@@ -1,5 +1,6 @@
 package com.demo.flowcharts.config;
 
+import com.demo.flowcharts.exception.FlowChartException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,6 +18,11 @@ public class ExceptionTranslator extends ResponseEntityExceptionHandler {
               .body(Map.of(
                       "status", "error",
                       "message", "Duplicate data found please check the chart and input"));
+   }
+
+   @ExceptionHandler(value = FlowChartException.class)
+   public ResponseEntity<Object> handleFlowChartException(FlowChartException ex) {
+      return ResponseEntity.status(ex.getStatus()).body(Map.of("status", "error", "message", ex.getMessage()));
    }
 
    @ExceptionHandler(value = RuntimeException.class)
