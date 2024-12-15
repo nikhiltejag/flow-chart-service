@@ -38,7 +38,11 @@
    server:
     port : <port>
    ```
-3. You can check application status using the health API `localhost:8080/health`
+   Alternatively, you can use below command to run the application in different port, replace `<port>` with your desired port number.
+   ```bash
+   mvn spring-boot:run -Dspring-boot.run.jvmArguments="-DSERVER_PORT=<port>"
+   ```
+4. You can check application status using the health API `localhost:8080/health`
    ```bash
    curl --location 'http://localhost:8080/health'
    ```
@@ -49,15 +53,15 @@
     "message": "FlowChartsApplication is up and running..."
    }
    ```
-4. Swagger UI is enabled in this application, you can access it [here](http://localhost:8080/swagger-ui/index.html). You can update the request body and try APIs here.
-5. We are using in memory h2 database, you can access its console
+5. Swagger UI is enabled in this application, you can access it [here](http://localhost:8080/swagger-ui/index.html). You can update the request body and try APIs here.
+6. We are using in memory h2 database, you can access its console
    at [localhost:8080/h2-console](http://localhost:8080/h2-console) using below credentials.
    ```text
    JDBC URL: jdbc:h2:mem:my_db
    User Name: user
    Password: pass
    ```
-6. You can check ER diagram [here](dbdiagram.png)
+7. You can check ER diagram [here](dbdiagram.png)
 
 ### Using flow charts APIs
 
